@@ -1,5 +1,4 @@
 # password_generator.py
-
 import random
 import string
 
@@ -28,6 +27,7 @@ def generate_password(length, pool):
 def main():
     print("=== Secure Password Generator ===\n")
 
+
     while True:
         try:
             length = int(input("Enter desired password length (8-64): "))
@@ -44,6 +44,16 @@ def main():
     use_symbols = get_yes_or_no("Include symbols? (y/n): ")
 
 
+    while True:
+        try:
+            times = int(input("How many passwords do you want? "))
+            if times > 0:
+                break
+            print("Please enter a number greater than 0.")
+        except ValueError:
+            print("Please enter a valid number.")
+
+
     pool = build_character_pool(use_upper, use_lower, use_digits, use_symbols)
 
     if not pool:
@@ -51,8 +61,9 @@ def main():
         return
 
 
-    password = generate_password(length, pool)
-    print("\nYour generated password:", password)
+    print("\nGenerated Passwords:")
+    for i in range(times):
+        password = generate_password(length, pool)
+        print(f"{i+1}: {password}")
 
-if __name__ == "__main__":
-    main()
+main()
